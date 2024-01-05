@@ -1,0 +1,25 @@
+BUILD TIME
+1704464258
+---
+- OS RELEASE
+NAME="Alpine Linux"
+ID=alpine
+VERSION_ID=3.19.0
+PRETTY_NAME="Alpine Linux v3.19"
+HOME_URL="https://alpinelinux.org/"
+BUG_REPORT_URL="https://gitlab.alpinelinux.org/alpine/aports/-/issues"
+
+- BASH VERSION
+GNU bash, version 5.2.21(1)-release (x86_64-pc-linux-musl)
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+
+This is free software; you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+- JQ VERSION
+jq-1.7.1
+
+- GIT VERSION
+git version 2.43.0
+
