@@ -1,0 +1,23 @@
+---
+stages:
+  - pipeline_clean
+
+image: docker:dind
+
+services:
+  - name: docker:dind
+    alias: thedockerhost
+
+variables:
+  DOCKER_HOST: tcp://thedockerhost:2375
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+pipeline:
+  stage: pipeline_clean
+  image: rootshellcoder/xbash:latest
+  before_script:
+    - chmod +x ./cleaner.sh
+  script:
+    - ./cleaner.sh pipeline
+...

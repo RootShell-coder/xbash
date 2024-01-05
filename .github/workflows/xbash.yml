@@ -2,17 +2,17 @@
 name: xbash
 on:
   schedule:
-    - cron: '30 6 * * *'
+    - cron: "30 6 * * *"
   push:
     branches: ["master"]
     paths:
-      - 'docker/**'
-      - '.github/workflows/**'
+      - "docker/**"
+      - ".github/workflows/**"
   pull_request:
     branches: ["master"]
     paths:
-      - 'docker/**'
-      - '.github/workflows/**'
+      - "docker/**"
+      - ".github/workflows/**"
 
 env:
   NAME_TAG: rootshellcoder/xbash:5.2.21-alpine3.19
@@ -21,16 +21,16 @@ env:
 
 jobs:
   test:
-    runs-on: [ ubuntu-latest ]
+    runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
       - name: Build Test
         run: docker build -f docker/Dockerfile .
 
   push:
-    needs: [ test ]
+    needs: [test]
     name: Publish to Docker Hub
-    runs-on: [ ubuntu-latest ]
+    runs-on: [ubuntu-latest]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -54,28 +54,31 @@ jobs:
             ${{ env.NAME_TAG }}
 
   check:
-    needs: [ push ]
+    needs: [push]
     name: Pull image
-    runs-on: [ ubuntu-latest ]
+    runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
       - name: Create report file
         run: |
           echo "BUILD TIME" > ${{ env.VER_LOG }}
           date +%s >> ${{ env.VER_LOG }}
-          echo "---" >> ${{ env.VER_LOG }}
+          echo "" >> ${{ env.VER_LOG }}
       - name: Check version
         run: |
           docker pull ${{ env.LATEST_TAG }}
           echo "- OS RELEASE"  >> ${{ env.VER_LOG }}
           docker run -i --rm  ${{ env.LATEST_TAG }} cat /etc/os-release >> ${{ env.VER_LOG }}
           echo "" >> ${{ env.VER_LOG }}
+
           echo "- BASH VERSION"  >> ${{ env.VER_LOG }}
           docker run -i --rm  ${{ env.LATEST_TAG }} bash --version >> ${{ env.VER_LOG }}
           echo "" >> ${{ env.VER_LOG }}
+
           echo "- JQ VERSION"  >> ${{ env.VER_LOG }}
           docker run -i --rm  ${{ env.LATEST_TAG }} jq --version >> ${{ env.VER_LOG }}
           echo "" >> ${{ env.VER_LOG }}
+
           echo "- GIT VERSION"  >> ${{ env.VER_LOG }}
           docker run -i --rm  ${{ env.LATEST_TAG }} git --version >> ${{ env.VER_LOG }}
           echo "" >> ${{ env.VER_LOG }}
@@ -85,6 +88,5 @@ jobs:
         with:
           author_name: RootShell-coder
           author_email: Root.Shelling@gmail.com
-          message: 'upd'
-          add: 'version*'
-...
+          message: "upd"
+          add: "version*"

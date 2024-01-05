@@ -1,0 +1,10 @@
+[
+  {
+    "id": {{ID_PROJECT}},
+    "name": "{{NAME_PROJECT}}"
+  },
+  {
+    "id": {{ID_PROJECT}},
+    "name": "{{NAME_PROJECT}}"
+  }
+]
