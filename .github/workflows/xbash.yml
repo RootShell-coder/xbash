@@ -15,7 +15,7 @@ on:
       - ".github/workflows/**"
 
 env:
-  NAME_TAG: rootshellcoder/xbash:5.2.21-alpine3.19
+  NAME_TAG: rootshellcoder/xbash:5.2.26-alpine3.19
   LATEST_TAG: rootshellcoder/xbash:latest
   VER_LOG: version_latest.txt
 
