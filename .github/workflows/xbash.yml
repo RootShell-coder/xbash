@@ -70,18 +70,27 @@ jobs:
           echo "- OS RELEASE"  >> ${{ env.VER_LOG }}
           docker run -i --rm  ${{ env.LATEST_TAG }} cat /etc/os-release >> ${{ env.VER_LOG }}
           echo "" >> ${{ env.VER_LOG }}
+          docker rmi $(docker images -q)
 
           echo "- BASH VERSION"  >> ${{ env.VER_LOG }}
           docker run -i --rm  ${{ env.LATEST_TAG }} bash --version >> ${{ env.VER_LOG }}
           echo "" >> ${{ env.VER_LOG }}
+          docker rmi $(docker images -q)
 
           echo "- JQ VERSION"  >> ${{ env.VER_LOG }}
           docker run -i --rm  ${{ env.LATEST_TAG }} jq --version >> ${{ env.VER_LOG }}
           echo "" >> ${{ env.VER_LOG }}
+          docker rmi $(docker images -q)
 
           echo "- GIT VERSION"  >> ${{ env.VER_LOG }}
           docker run -i --rm  ${{ env.LATEST_TAG }} git --version >> ${{ env.VER_LOG }}
           echo "" >> ${{ env.VER_LOG }}
+          docker rmi $(docker images -q)
+
+          echo "- RSYNC VERSION"  >> ${{ env.VER_LOG }}
+          docker run -i --rm  ${{ env.LATEST_TAG }} rsync --version >> ${{ env.VER_LOG }}
+          echo "" >> ${{ env.VER_LOG }}
+          docker rmi $(docker images -q)
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
