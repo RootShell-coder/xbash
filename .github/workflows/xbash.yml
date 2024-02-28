@@ -23,7 +23,7 @@ jobs:
   test:
     runs-on: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Build Test
         run: docker build -f docker/Dockerfile .
 
@@ -58,7 +58,7 @@ jobs:
     name: Pull image
     runs-on: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Create report file
         run: |
           echo "BUILD TIME" > ${{ env.VER_LOG }}
