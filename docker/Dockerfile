@@ -5,6 +5,7 @@ RUN set -eux; \
   jq \
   git \
   curl \
+  tree \
   rsync; \
   apk --no-cache del; \
   addgroup -S xbash; \
