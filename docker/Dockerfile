@@ -5,6 +5,7 @@ RUN set -eux; \
   jq \
   git \
   curl \
+  openssh-client \
   tree \
   rsync; \
   apk --no-cache del; \
