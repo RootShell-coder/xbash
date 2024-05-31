@@ -1,4 +1,4 @@
-FROM bash:5.2.26-alpine3.19
+FROM dockerhub.timeweb.cloud/bash:5.2.26-alpine3.20
 
 RUN set -eux; \
   apk add --update --no-cache \
