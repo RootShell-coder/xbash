@@ -1,8 +1,7 @@
-name: Docker build
-
+name: Build and check image
 on:
   schedule:
-    - cron: "30 6 * * 1-5"
+    - cron: "30 5 * * 1-5"
   push:
     branches: ["master"]
     paths:
