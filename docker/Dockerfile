@@ -16,6 +16,10 @@ RUN set -eux; \
   adduser -S xbash -G xbash -h /home/xbash -s /bin/bash; \
   ln /usr/local/bin/bash /bin/bash;
 
+USER xbash
+
 WORKDIR /home/xbash
+
 ENTRYPOINT []
+
 CMD ["bash", "--help"]
