@@ -1,4 +1,4 @@
-FROM dockerhub.timeweb.cloud/bash:5.2.26-alpine3.20
+FROM bash:5.2-alpine3.20
 
 RUN set -eux; \
   apk add --update --no-cache \
@@ -7,7 +7,10 @@ RUN set -eux; \
   curl \
   openssh-client \
   tree \
-  rsync; \
+  rsync \
+  nmap \
+  bind-tools \
+  ca-certificates; \
   apk --no-cache del; \
   addgroup -S xbash; \
   adduser -S xbash -G xbash -h /home/xbash -s /bin/bash; \

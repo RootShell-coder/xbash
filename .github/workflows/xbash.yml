@@ -1,11 +1,24 @@
-name: ci
+name: Docker build
 
 on:
+  schedule:
+    - cron: "30 6 * * 1-5"
   push:
+    branches: ["master"]
+    paths:
+      - "docker/**"
+      - ".github/workflows/**"
+  pull_request:
+    branches: ["master"]
+    paths:
+      - "docker/**"
+      - ".github/workflows/**"
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  NAME_TAG: ghcr.io/rootshell-coder/xbash:5.2-alpine3.20
+  LATEST_TAG: ghcr.io/rootshell-coder/xbash:latest
+  TRIVY_SECURITY: SECURITY.txt
 
 jobs:
   build:
@@ -31,12 +44,30 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.LATEST_TAG }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: docker
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ env.LATEST_TAG }}
+            ${{ env.NAME_TAG }}
+
+  check:
+    needs: [build]
+    name: Pull image
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Check version
+        run: |
+          docker run --rm ghcr.io/rootshell-coder/trivy-cached:latest image ${{ env.LATEST_TAG }} --skip-db-update > ${{ env.TRIVY_SECURITY }}
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: RootShell-coder
+          author_email: Root.Shelling@gmail.com
+          message: "check"
+          add: "*.txt"
