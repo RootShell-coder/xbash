@@ -45,12 +45,12 @@ jobs:
           tags: |
             ${{ env.LATEST_TAG }}
             ${{ env.NAME_TAG }}
-
   check:
     needs: [build]
     name: Pull image
     runs-on: [ubuntu-latest]
     steps:
+      - uses: actions/checkout@v4
       - name: Check version
         run: |
           docker run --rm ghcr.io/rootshell-coder/trivy-cached:latest image ${{ env.LATEST_TAG }} --skip-db-update > ${{ env.TRIVY_SECURITY }}
