@@ -14,7 +14,8 @@ RUN set -eux; \
   apk --no-cache del; \
   addgroup -S xbash; \
   adduser -S xbash -G xbash -h /home/xbash -s /bin/bash; \
-  ln /usr/local/bin/bash /bin/bash;
+  ln /usr/local/bin/bash /bin/bash; \
+  chmod 777 /home/xbash;
 
 USER xbash
 
