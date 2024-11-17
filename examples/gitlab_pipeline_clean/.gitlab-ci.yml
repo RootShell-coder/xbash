@@ -1,23 +1,40 @@
 ---
 stages:
   - pipeline_clean
+  - pipeline_making
 
-image: dockerhub.timeweb.cloud/docker:dind
+image: ghcr.io/rootshell-coder/xbash:latest
 
 services:
-  - name: dockerhub.timeweb.cloud/docker:dind
-    alias: thedockerhost
+  - name: docker:dind
+    alias: docker
 
 variables:
-  DOCKER_HOST: tcp://thedockerhost:2375
+  DOCKER_HOST: tcp://docker:2376
   DOCKER_DRIVER: overlay2
-  DOCKER_TLS_CERTDIR: ""
+  DOCKER_TLS_CERTDIR: "/certs"
 
+# Sedule clean task
 pipeline:
   stage: pipeline_clean
-  image: ghcr.io/rootshell-coder/xbash:latest
-  before_script:
-    - chmod +x ./cleaner.sh
+  tags:
+    - docker-runner
   script:
-    - ./cleaner.sh pipeline
+    - bash ./cleaner.sh pipeline
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always
+    - when: never
+
+# make id_proj.json create helper
+making:
+  stage: pipeline_making
+  tags:
+    - docker-runner
+  script:
+    - bash ./cleaner.sh making
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: manual
 ...
